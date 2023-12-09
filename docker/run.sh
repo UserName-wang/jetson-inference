@@ -168,6 +168,17 @@ do
 	fi
 done
 
+# check for /dev/ttyUSB0
+
+ttyUSB_DEVICES=""
+
+for i in {0..5}
+do
+	if [ -a "/dev/ttyUSB$i" ]; then
+		ttyUSB_DEVICES="$ttyUSB_DEVICES --device /dev/ttyUSB$i "
+	fi
+done
+
 # check for display
 DISPLAY_DEVICE=""
 
@@ -193,6 +204,7 @@ print_var "USER_VOLUME"
 print_var "USER_COMMAND"
 print_var "V4L2_DEVICES"
 print_var "DISPLAY_DEVICE"
+print_var "ttyUSB_DEVICES"
 
 # run the container
 if [ $ARCH = "aarch64" ]; then
@@ -206,7 +218,7 @@ if [ $ARCH = "aarch64" ]; then
 		-v /etc/enctune.conf:/etc/enctune.conf \
 		-v /etc/nv_tegra_release:/etc/nv_tegra_release \
 		-v /tmp/nv_jetson_model:/tmp/nv_jetson_model \
-		$DISPLAY_DEVICE $V4L2_DEVICES \
+		$DISPLAY_DEVICE $V4L2_DEVICES $ttyUSB_DEVICES\
 		$DATA_VOLUME $USER_VOLUME $DEV_VOLUME \
 		$CONTAINER_IMAGE $USER_COMMAND
 

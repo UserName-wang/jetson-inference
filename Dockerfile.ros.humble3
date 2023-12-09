@@ -1,0 +1,29 @@
+#
+# this dockerfile roughly follows the 'Install ROS From Source' procedures from:
+#   https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html
+#
+ARG BASE_IMAGE=ubuntu22.04:humble-desktop
+FROM ${BASE_IMAGE}
+WORKDIR /tmp
+
+# 
+# add the ROS deb repo to the apt sources list
+#
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    locales \
+    software-properties-common \
+    python3 \
+    python3-pip \
+    git \
+    apt-utils
+
+RUN rosdep init && \
+    rosdep update 
+
+#RUN rosdep install --from-paths src --ignore-src --rosdistro humble -y
+
+RUN apt install gazebo
+
+ 
+WORKDIR /home

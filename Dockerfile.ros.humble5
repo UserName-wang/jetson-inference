@@ -1,0 +1,19 @@
+#
+# this dockerfile roughly follows the 'Install ROS From Source' procedures from:
+#   https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html
+#
+# install sudo apt install ros-humble-cartographer ros-humble-cartographer-ros ros-humble-cartographer-rviz
+# sudo apt-get install ignition-fortress ros-humble-ros-gz  sudo apt install ros-rolling-ros-gz
+# ros-humble-turtlebot3-simulations
+
+ARG BASE_IMAGE=ubuntu22.04:humble-desktop-slam-ign
+
+FROM ${BASE_IMAGE}
+WORKDIR /tmp
+
+
+
+RUN echo "export ROS_DOMAIN_ID=1" >> ~/.bashrc
+
+CMD ["bash"]    
+WORKDIR /home
